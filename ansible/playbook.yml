@@ -82,10 +82,28 @@
         state: absent
       notify: Reload Nginx
 
+    - name: Ensure Nginx is started and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Test Nginx configuration
+      command: nginx -t
+      register: nginx_test
+      changed_when: false
+
     - name: Obtain SSL certificate
-      command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }}
+      command: certbot --nginx -d {{ domain_name }} -d www.{{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect
       args:
         creates: "/etc/letsencrypt/live/{{ domain_name }}/fullchain.pem"
+      ignore_errors: true
+      register: certbot_result
+
+    - name: Display Certbot result
+      debug:
+        var: certbot_result
+      when: certbot_result.failed
 
   handlers:
     - name: Reload Nginx
