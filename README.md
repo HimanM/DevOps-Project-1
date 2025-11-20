@@ -581,7 +581,7 @@ This project is open source and available under the [MIT License](LICENSE).
 ## Contact
 
 **Author**: Himan Manduja
-**GitHub**: [@yourusername](https://github.com/himanm)  
+**GitHub**: [HimanM](https://github.com/himanm)  
 
 ---
 
