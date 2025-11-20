@@ -49,6 +49,7 @@ resource "null_resource" "deploy" {
     inline = [
       "export DOMAIN_NAME=${var.domain_name}",
       "export GITHUB_REPOSITORY=${var.github_repository}",
+      "cd /home/${var.ssh_user}",
       "docker compose down",
       "docker compose pull",
       "docker compose up -d"
