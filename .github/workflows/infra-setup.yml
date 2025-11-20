@@ -34,6 +34,7 @@ jobs:
           echo "ssh_user = \"${{ secrets.SSH_USER }}\"" >> terraform/terraform.tfvars
           echo "ssh_password = \"${{ secrets.SSH_PASSWORD }}\"" >> terraform/terraform.tfvars
           echo "domain_name = \"${{ secrets.DOMAIN_NAME }}\"" >> terraform/terraform.tfvars
+          echo "github_repository = \"${GITHUB_REPOSITORY,,}\"" >> terraform/terraform.tfvars
 
       - name: Initialize Terraform
         run: terraform init

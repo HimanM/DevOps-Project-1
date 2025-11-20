@@ -14,10 +14,17 @@ variable "ssh_password" {
   sensitive   = true
 }
 
+
+
 variable "domain_name" {
   description = "The domain name for the application"
   type        = string
   default     = "localhost"
+}
+
+variable "github_repository" {
+  description = "The GitHub repository (owner/repo) for pulling images"
+  type        = string
 }
 
 resource "null_resource" "deploy" {
@@ -41,8 +48,10 @@ resource "null_resource" "deploy" {
   provisioner "remote-exec" {
     inline = [
       "export DOMAIN_NAME=${var.domain_name}",
+      "export GITHUB_REPOSITORY=${var.github_repository}",
       "docker compose down",
-      "docker compose up -d --build"
+      "docker compose pull",
+      "docker compose up -d"
     ]
   }
 }
