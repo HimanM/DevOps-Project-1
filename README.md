@@ -18,22 +18,6 @@ graph TD
     
     subgraph CI_CD [GitHub Actions]
         Build[Build & Test] -->|SSH| Deploy[Deploy to VPS]
-    end
-```
-
-## Components
-
-- **Frontend**: Next.js 14 (App Router) with Tailwind CSS & Framer Motion.
-- **Backend**: Flask API with Prometheus metrics.
-- **Infrastructure**:
-  - **Docker Compose**: Orchestrates the application containers.
-  - **Terraform**: Deploys the Docker stack to the VPS via SSH (Password Auth).
-  - **Ansible**: Configures the VPS (installs Docker, Nginx, Certbot) and manages SSL.
-
-## Quick Start
-
-### Prerequisites
-- Docker & Docker Compose
 - Terraform
 - Ansible
 - A VPS (Ubuntu recommended)

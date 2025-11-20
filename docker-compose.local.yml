@@ -1,7 +1,6 @@
 services:
   backend:
     build: ./backend
-    image: ghcr.io/${GITHUB_REPOSITORY}/backend:latest
     container_name: backend
     networks:
       - app-internal
@@ -10,7 +9,6 @@ services:
 
   frontend:
     build: ./frontend
-    image: ghcr.io/${GITHUB_REPOSITORY}/frontend:latest
     container_name: frontend
     environment:
       - BACKEND_URL=http://backend:5000
