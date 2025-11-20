@@ -21,11 +21,10 @@ jobs:
         run: |
           echo "[servers]" > ansible/inventory.ini
           echo "${{ secrets.SSH_HOST }} ansible_user=${{ secrets.SSH_USER }} ansible_password=${{ secrets.SSH_PASSWORD }} domain_name=${{ secrets.DOMAIN_NAME }} frontend_port=57001" >> ansible/inventory.ini
-          # Disable host key checking for automation
-          echo "[defaults]" > ansible/ansible.cfg
-          echo "host_key_checking = False" >> ansible/ansible.cfg
 
       - name: Run Ansible Playbook
+        env:
+          ANSIBLE_CONFIG: ansible/ansible.cfg
         run: |
           ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
 
