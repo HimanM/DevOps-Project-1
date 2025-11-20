@@ -3,6 +3,12 @@ name: CD Pipeline
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'ansible/**'
+      - 'terraform/**'
+      - 'README.md'
+      - 'guides/**'
+      - '.github/workflows/infra-setup.yml'
 
 env:
   REGISTRY: ghcr.io
