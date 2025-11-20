@@ -1,0 +1,45 @@
+name: Infrastructure Setup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Install Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible sshpass
+
+      - name: Create Ansible Inventory
+        run: |
+          echo "[servers]" > ansible/inventory.ini
+          echo "${{ secrets.SSH_HOST }} ansible_user=${{ secrets.SSH_USER }} ansible_password=${{ secrets.SSH_PASSWORD }} domain_name=${{ secrets.DOMAIN_NAME }} frontend_port=57001" >> ansible/inventory.ini
+          # Disable host key checking for automation
+          echo "[defaults]" > ansible/ansible.cfg
+          echo "host_key_checking = False" >> ansible/ansible.cfg
+
+      - name: Run Ansible Playbook
+        run: |
+          ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
+
+      - name: Create Terraform Variables
+        run: |
+          echo "ssh_host = \"${{ secrets.SSH_HOST }}\"" > terraform/terraform.tfvars
+          echo "ssh_user = \"${{ secrets.SSH_USER }}\"" >> terraform/terraform.tfvars
+          echo "ssh_password = \"${{ secrets.SSH_PASSWORD }}\"" >> terraform/terraform.tfvars
+          echo "domain_name = \"${{ secrets.DOMAIN_NAME }}\"" >> terraform/terraform.tfvars
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
+        working-directory: ./terraform

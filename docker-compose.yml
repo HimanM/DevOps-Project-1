@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./backend
+    image: ghcr.io/${GITHUB_REPOSITORY}/backend:latest
+    container_name: backend
+    networks:
+      - app-internal
+    expose:
+      - "5000"
+
+  frontend:
+    build: ./frontend
+    image: ghcr.io/${GITHUB_REPOSITORY}/frontend:latest
+    container_name: frontend
+    environment:
+      - BACKEND_URL=http://backend:5000
+    ports:
+      - "57001:3000"
+    networks:
+      - app-internal
+
+networks:
+  app-internal:
+    internal: true

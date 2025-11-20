@@ -1,0 +1,4 @@
+ssh_host = "YOUR_VPS_IP"
+ssh_user = "root"
+ssh_password = "YOUR_SSH_PASSWORD"
+domain_name = "example.com"
