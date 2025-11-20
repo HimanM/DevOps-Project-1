@@ -1,8 +1,42 @@
 from flask import Flask, Response, jsonify
-from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 import time
 
 app = Flask(__name__)
+
+# Prometheus metrics
+REQUEST_COUNT = Counter(
+    'http_requests_total', 
+    'Total HTTP Requests',
+    ['method', 'endpoint', 'status']
+)
+
+REQUEST_DURATION = Histogram(
+    'http_request_duration_seconds',
+    'HTTP Request Duration',
+    ['method', 'endpoint']
+)
+
+@app.before_request
+def before_request():
+    from flask import request, g
+    g.start_time = time.time()
+
+@app.after_request
+def after_request(response):
+    from flask import request, g
+    if hasattr(g, 'start_time'):
+        duration = time.time() - g.start_time
+        REQUEST_DURATION.labels(
+            method=request.method,
+            endpoint=request.endpoint or 'unknown'
+        ).observe(duration)
+        REQUEST_COUNT.labels(
+            method=request.method,
+            endpoint=request.endpoint or 'unknown',
+            status=response.status_code
+        ).inc()
+    return response
 
 @app.route('/')
 def hello():
