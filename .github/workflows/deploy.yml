@@ -9,6 +9,7 @@ on:
       - 'README.md'
       - 'guides/**'
       - '.github/workflows/infra-setup.yml'
+      - 'monitoring/**'
 
 env:
   REGISTRY: ghcr.io
