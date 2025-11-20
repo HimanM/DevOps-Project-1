@@ -8,7 +8,7 @@
 
 [![Infrastructure Setup](https://github.com/HimanM/DevOps-Project-1/actions/workflows/infra-setup.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/infra-setup.yml)
 
-[![Deploy to VPS](https://github.com/HimanM/DevOps-Project-1/actions/workflows/deploy-to-vps.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/deploy-to-vps.yml)
+[![Deploy to VPS](https://github.com/HimanM/DevOps-Project-1/actions/workflows/deploy.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/deploy.yml)
 
 ## 📋 Table of Contents
 
