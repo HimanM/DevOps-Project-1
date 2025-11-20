@@ -118,7 +118,7 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-slate-100">Dockerized</div>
-                <p className="text-xs text-slate-500 mt-1">Traefik Network</p>
+                <p className="text-xs text-slate-500 mt-1">NGINX Proxy</p>
               </CardContent>
             </Card>
           </motion.div>
