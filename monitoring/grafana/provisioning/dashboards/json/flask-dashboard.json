@@ -10,8 +10,7 @@
     "panels": [
         {
             "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
+                "type": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -84,8 +83,7 @@
             "targets": [
                 {
                     "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
+                        "type": "prometheus"
                     },
                     "expr": "rate(http_requests_total[5m])",
                     "refId": "A"
@@ -96,8 +94,7 @@
         },
         {
             "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
+                "type": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -149,8 +146,7 @@
             "targets": [
                 {
                     "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
+                        "type": "prometheus"
                     },
                     "expr": "rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m]) * 1000",
                     "refId": "A"
@@ -161,8 +157,7 @@
         },
         {
             "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
+                "type": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -202,8 +197,7 @@
             "targets": [
                 {
                     "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
+                        "type": "prometheus"
                     },
                     "expr": "sum by (endpoint) (http_requests_total)",
                     "refId": "A"
@@ -214,8 +208,7 @@
         },
         {
             "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
+                "type": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -260,8 +253,7 @@
             "targets": [
                 {
                     "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
+                        "type": "prometheus"
                     },
                     "expr": "sum(http_requests_total)",
                     "refId": "A"
