@@ -3,11 +3,8 @@
 > A production-grade demonstration of modern DevOps practices, featuring containerized microservices, Infrastructure as Code (IaC), and automated CI/CD pipelines.
 
 [![Backend CI](https://github.com/HimanM/DevOps-Project-1/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/backend-ci.yml)
-
 [![Frontend CI](https://github.com/HimanM/DevOps-Project-1/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/frontend-ci.yml)
-
 [![Infrastructure Setup](https://github.com/HimanM/DevOps-Project-1/actions/workflows/infra-setup.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/infra-setup.yml)
-
 [![Deploy to VPS](https://github.com/HimanM/DevOps-Project-1/actions/workflows/deploy.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-1/actions/workflows/deploy.yml)
 
 ## 📋 Table of Contents
@@ -37,6 +34,9 @@ This project demonstrates a complete DevOps workflow for deploying a full-stack 
 - **Reverse Proxy & SSL** with Nginx and Certbot
 - **Container Registry** integration with GitHub Container Registry (GHCR)
 - **Production Deployment** to Ubuntu VPS with zero-downtime updates
+- **Monitoring Stack** with Prometheus and Grafana
+
+![Frontend Home](doc/frontend_home.png)
 
 ---
 
@@ -205,8 +205,15 @@ graph TB
 ├── guides/
 │   └── setup_guide.md              # Detailed setup instructions
 │
+├── monitoring/
+│   ├── prometheus.yml              # Prometheus configuration
+│   └── grafana/                    # Grafana provisioning
+│
+├── doc/                            # Documentation images
+│
 ├── docker-compose.yml              # Production compose file (GHCR images)
 ├── docker-compose.local.yml        # Local development compose file
+├── docker-compose.monitoring.yml   # Monitoring stack compose file
 └── README.md                       # This file
 ```
 
@@ -240,6 +247,8 @@ graph TB
    - Frontend: [http://localhost:57001](http://localhost:57001)
    - Backend API: [http://localhost:57001/api/data](http://localhost:57001/api/data)
    - Metrics: [http://localhost:57001/metrics](http://localhost:57001/metrics)
+
+   ![Backend API](doc/backend_api.png)
 
 4. **View Logs**
    ```bash
@@ -432,6 +441,17 @@ The Flask backend exposes Prometheus-compatible metrics at `/metrics`:
 
 **Integration**: Can be scraped by Prometheus server for monitoring and alerting.
 
+![Prometheus Targets](doc/prometheus_targets.png)
+
+### Grafana Dashboard
+
+A pre-configured Grafana dashboard visualizes key metrics:
+- Request Rate
+- Average Response Time
+- Requests by Endpoint
+
+![Grafana Dashboard](doc/grafana_dashboard.png)
+
 ---
 
 ## Development
@@ -548,7 +568,7 @@ sudo tail -f /var/log/nginx/access.log
 
 ## Future Enhancements
 
-- [ ] Prometheus + Grafana monitoring stack
+- [x] Prometheus + Grafana monitoring stack
 
 ---
 
