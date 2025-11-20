@@ -94,7 +94,7 @@
       changed_when: false
 
     - name: Obtain SSL certificate
-      command: certbot --nginx -d {{ domain_name }} -d www.{{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect
+      command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect
       args:
         creates: "/etc/letsencrypt/live/{{ domain_name }}/fullchain.pem"
       ignore_errors: true
