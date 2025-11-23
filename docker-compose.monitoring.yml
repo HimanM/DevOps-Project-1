@@ -1,5 +1,5 @@
 services:
-  backend:
+  devops-project-1-backend:
     build: ./backend
     container_name: backend
     networks:
@@ -7,11 +7,11 @@ services:
     expose:
       - "5000"
 
-  frontend:
+  devops-project-1-frontend:
     build: ./frontend
     container_name: frontend
     environment:
-      - BACKEND_URL=http://backend:5000
+      - BACKEND_URL=http://devops-project-1-backend:5000
     ports:
       - "57001:3000"
     networks:
