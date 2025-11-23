@@ -49,6 +49,14 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.REPO }}/frontend:latest
 
+      - name: Create deployment directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: mkdir -p /home/${{ secrets.SSH_USER }}/devops-project-1
+
       - name: Copy Docker Compose to VPS
         uses: appleboy/scp-action@master
         with:
@@ -56,7 +64,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "docker-compose.yml"
-          target: "/home/${{ secrets.SSH_USER }}/"
+          target: "/home/${{ secrets.SSH_USER }}/devops-project-1/"
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -67,7 +75,8 @@ jobs:
           script: |
             export GITHUB_REPOSITORY=${{ env.REPO }}
             export DOMAIN_NAME=${{ secrets.DOMAIN_NAME }}
-            cd /home/${{ secrets.SSH_USER }}
+            mkdir -p /home/${{ secrets.SSH_USER }}/devops-project-1
+            cd /home/${{ secrets.SSH_USER }}/devops-project-1
             
             # Login to GHCR (Optional: Only needed if packages are private)
             # echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
