@@ -19,23 +19,32 @@
         state: latest
         update_cache: true
 
+    - name: Check if Docker is installed
+      command: docker --version
+      register: docker_check
+      ignore_errors: true
+      changed_when: false
+
     - name: Create directory for apt keyrings
       file:
         path: /etc/apt/keyrings
         state: directory
         mode: '0755'
+      when: docker_check.failed
 
     - name: Download Docker GPG key
       get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
         mode: '0644'
+      when: docker_check.failed
 
     - name: Add Docker Repository
       apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
         filename: docker
+      when: docker_check.failed
 
     - name: Install Docker
       apt:
@@ -44,8 +53,9 @@
           - docker-ce-cli
           - containerd.io
           - docker-compose-plugin
-        state: latest
+        state: present
         update_cache: true
+      when: docker_check.failed
 
     - name: Add user to docker group
       user:
