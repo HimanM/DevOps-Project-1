@@ -103,6 +103,13 @@
       register: nginx_test
       changed_when: false
 
+    - name: Debug domain name
+      debug:
+        msg: "Configuring SSL for domain: {{ domain_name }}"
+
+    - name: Flush handlers to ensure Nginx is reloaded
+      meta: flush_handlers
+
     - name: Obtain SSL certificate
       command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect
       args:
