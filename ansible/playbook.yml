@@ -108,11 +108,13 @@
       debug:
         msg: "Configuring SSL for domain: {{ domain_name }} on port: {{ frontend_port }}"
 
-    - name: Flush handlers to ensure Nginx is reloaded
-      meta: flush_handlers
+    - name: Reload Nginx to apply config
+      service:
+        name: nginx
+        state: reloaded
 
     - name: Obtain SSL certificate
-      command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect --expand
+      command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect
       ignore_errors: true
       register: certbot_result
 
