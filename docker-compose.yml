@@ -2,7 +2,7 @@ services:
   devops-project-1-backend:
     build: ./backend
     image: ghcr.io/${GITHUB_REPOSITORY}/backend:latest
-    container_name: backend
+    container_name: devops-project-1-backend
     networks:
       - app-internal
     expose:
@@ -11,9 +11,9 @@ services:
   devops-project-1-frontend:
     build: ./frontend
     image: ghcr.io/${GITHUB_REPOSITORY}/frontend:latest
-    container_name: frontend
+    container_name: devops-project-1-frontend
     environment:
-      - BACKEND_URL=http://backend:5000
+      - BACKEND_URL=http://devops-project-1-backend:5000
     ports:
       - "57001:3000"
     networks:
