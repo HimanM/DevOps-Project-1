@@ -39,17 +39,20 @@ resource "null_resource" "deploy" {
     host     = var.ssh_host
   }
 
-  provisioner "file" {
-    source      = "../docker-compose.yml"
-    destination = "/home/${var.ssh_user}/docker-compose.yml"
+  provisioner "remote-exec" {
+    inline = ["mkdir -p /home/${var.ssh_user}/devops-project-1"]
   }
 
+  provisioner "file" {
+    source      = "../docker-compose.yml"
+    destination = "/home/${var.ssh_user}/devops-project-1/docker-compose.yml"
+  }
 
   provisioner "remote-exec" {
     inline = [
       "export DOMAIN_NAME=${var.domain_name}",
       "export GITHUB_REPOSITORY=${var.github_repository}",
-      "cd /home/${var.ssh_user}",
+      "cd /home/${var.ssh_user}/devops-project-1",
       "docker compose down",
       "docker compose pull",
       "docker compose up -d"
