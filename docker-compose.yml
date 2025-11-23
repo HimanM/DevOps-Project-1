@@ -13,7 +13,7 @@ services:
     image: ghcr.io/${GITHUB_REPOSITORY}/frontend:latest
     container_name: frontend
     environment:
-      - BACKEND_URL=http://devops-project-1-backend:5000
+      - BACKEND_URL=http://backend:5000
     ports:
       - "57001:3000"
     networks:
