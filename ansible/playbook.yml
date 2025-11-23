@@ -4,6 +4,7 @@
   become: true
   vars:
     docker_users: ["{{ ansible_user }}"]
+    frontend_port: 57001
 
   tasks:
     - name: Install required system packages
@@ -103,9 +104,9 @@
       register: nginx_test
       changed_when: false
 
-    - name: Debug domain name
+    - name: Debug variables
       debug:
-        msg: "Configuring SSL for domain: {{ domain_name }}"
+        msg: "Configuring SSL for domain: {{ domain_name }} on port: {{ frontend_port }}"
 
     - name: Flush handlers to ensure Nginx is reloaded
       meta: flush_handlers
