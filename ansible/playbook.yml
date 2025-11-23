@@ -111,9 +111,7 @@
       meta: flush_handlers
 
     - name: Obtain SSL certificate
-      command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect
-      args:
-        creates: "/etc/letsencrypt/live/{{ domain_name }}/fullchain.pem"
+      command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos -m admin@{{ domain_name }} --redirect --expand
       ignore_errors: true
       register: certbot_result
 
